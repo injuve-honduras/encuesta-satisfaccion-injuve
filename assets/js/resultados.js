@@ -9,5 +9,27 @@ function render(data){
  data.questions.forEach(q=>{const sum=q.options.reduce((a,o)=>a+Number(o.count||0),0);html+=`<section class="result-card"><h3>${esc(q.title)}</h3>`;q.options.forEach(o=>{const pct=sum?Math.round(Number(o.count||0)/sum*100):0;html+=`<div class="result-row"><div class="result-meta"><span>${esc(o.label)}</span><strong>${o.count} · ${pct}%</strong></div><div class="bar"><i style="width:${pct}%"></i></div></div>`;});html+='</section>';});
  html+='<p class="results-note">Los porcentajes se calculan sobre las respuestas registradas para cada pregunta. En la pregunta 9 se permiten selecciones múltiples, por lo que el total de selecciones puede superar el número de encuestas.</p>';dashboard.innerHTML=html;
 }
-function load(){const callback='injuveSurveyStats';window[callback]=data=>{try{render(data);}catch(e){dashboard.innerHTML=`<p class="error">${esc(e.message)}</p>`;}};const s=document.createElement('script');s.src=`${API_URL}?action=stats&callback=${callback}&_=${Date.now()}`;s.onerror=()=>dashboard.innerHTML='<p class="error">No fue posible conectar con el servicio de resultados. Intente más tarde.</p>';document.body.appendChild(s);}
+function load(){
+    const callback = 'injuveSurveyStats';
+
+    window[callback] = data => {
+        try {
+            render(data);
+        } catch(e) {
+            dashboard.innerHTML = `<p class="error">${esc(e.message)}</p>`;
+        }
+    };
+
+    const s = document.createElement('script');
+    s.referrerPolicy = 'no-referrer';
+
+    s.src = `${API_URL}?authuser=0&action=stats&callback=${callback}&_=${Date.now()}`;
+
+    s.onerror = () => {
+        dashboard.innerHTML = '<p class="error">No fue posible conectar con el servicio de resultados. Intente más tarde.</p>';
+    };
+
+    document.body.appendChild(s);
+}
+
 load();
