@@ -1,4 +1,4 @@
-const API_URL='https://script.google.com/macros/s/AKfycbzyKXzM-nLs5c52tVpJ90SRfM5Lyy5V9i_lOdRDbBW0lVfuzoaPVBPuuqaRvu1dgXvHAg/exec';
+const API_URL = 'https://script.google.com/macros/s/AKfycbwOvWXZ_kNqTzoyX9QzlYjELmvfZsIV-Krq8IKlxy1j9IHCngSooSGuACKI7RGZ9Zuo4w/exec';
 const dashboard=document.getElementById('dashboard');
 function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function render(data){
@@ -23,7 +23,7 @@ function load(){
     const s = document.createElement('script');
     s.referrerPolicy = 'no-referrer';
 
-    s.src = `${API_URL}?authuser=0&action=stats&callback=${callback}&_=${Date.now()}`;
+    s.src = `${API_URL}?action=stats&callback=${callback}&_=${Date.now()}`;
 
     s.onerror = () => {
         dashboard.innerHTML = '<p class="error">No fue posible conectar con el servicio de resultados. Intente más tarde.</p>';
